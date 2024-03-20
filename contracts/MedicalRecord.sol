@@ -82,8 +82,9 @@ contract MedicalRecord {
     function deleteRecord(uint256 _recordId) public {
         require(!isDeleted[_recordId], "Patient record has already been deleted.");
 
-        Record storage record = records[_recordId];
-        
+        Record memory record = records[_recordId];
+        isDeleted[_recordId] = true;
+
         emit DeleteRecordEvent(
             record.recordId,
             block.timestamp,
