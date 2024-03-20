@@ -19,7 +19,19 @@ contract MedicalRecord {
     mapping(uint256 => Record) internal records;
     mapping(uint256 => bool) public isDeleted;
 
-    event AddRecord(
+    event AddRecordEvent(
+        uint256 recordId,
+        uint256 timestamp,
+        string name,
+        uint8 age,
+        string gender,
+        string bloodType,
+        string allergies,
+        string diagnosis,
+        string treatment
+    );
+
+    event DeleteRecordEvent(
         uint256 recordId,
         uint256 timestamp,
         string name,
@@ -41,6 +53,7 @@ contract MedicalRecord {
         string memory _treatment
     ) public {
         recordId++;
+
         records[recordId] = Record(
             recordId,
             block.timestamp,
@@ -52,7 +65,8 @@ contract MedicalRecord {
             _diagnosis,
             _treatment
         );
-        emit AddRecord(
+
+        emit AddRecordEvent(
             recordId,
             block.timestamp,
             _name,
@@ -62,6 +76,24 @@ contract MedicalRecord {
             _allergies,
             _diagnosis,
             _treatment
+        );
+    }
+
+    function deleteRecord(uint256 _recordId) public {
+        require(!isDeleted[_recordId], "Patient record has already been deleted.");
+
+        Record storage record = records[_recordId];
+        
+        emit DeleteRecordEvent(
+            record.recordId,
+            block.timestamp,
+            record.name,
+            record.age,
+            record.gender,
+            record.bloodType,
+            record.allergies,
+            record.diagnosis,
+            record.treatment
         );
     }
 }
