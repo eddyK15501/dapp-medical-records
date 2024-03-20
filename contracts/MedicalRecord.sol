@@ -14,7 +14,7 @@ contract MedicalRecord {
         string treatment;
     }
 
-    uint256 public recordId;
+    uint256 internal recordId;
 
     mapping(uint256 => Record) internal records;
     mapping(uint256 => bool) public isDeleted;
@@ -31,6 +31,7 @@ contract MedicalRecord {
         string treatment
     );
 
+    // Events
     event DeleteRecordEvent(
         uint256 recordId,
         uint256 timestamp,
@@ -81,7 +82,6 @@ contract MedicalRecord {
 
     function deleteRecord(uint256 _recordId) public {
         require(!isDeleted[_recordId], "Patient record has already been deleted.");
-
         Record memory record = records[_recordId];
         isDeleted[_recordId] = true;
 
@@ -96,5 +96,46 @@ contract MedicalRecord {
             record.diagnosis,
             record.treatment
         );
+    }
+
+    // Getter Functions
+    function getRecord() public view returns (uint256) {
+        return recordId;
+    }
+
+    function getTimestamp(uint256 _recordId) public view returns (uint256) {
+        return records[_recordId].timestamp;
+    }
+
+    function getName(uint256 _recordId) public view returns (string memory) {
+        return records[_recordId].name;
+    }
+
+    function getAge(uint256 _recordId) public view returns (uint8) {
+        return records[_recordId].age;
+    }
+
+    function getGender(uint256 _recordId) public view returns (string memory) {
+        return records[_recordId].gender;
+    }
+
+    function getBloodType(uint256 _recordId) public view returns (string memory) {
+        return records[_recordId].bloodType;
+    }
+
+    function getAllergies(uint256 _recordId) public view returns (string memory) {
+        return records[_recordId].allergies;
+    }
+
+    function getDiagnosis(uint256 _recordId) public view returns (string memory) {
+        return records[_recordId].diagnosis;
+    } 
+
+    function getTreatment(uint256 _recordId) public view returns (string memory) {
+        return records[_recordId].treatment;
+    }
+
+    function getIsDeleted(uint256 _recordId) public view returns (bool) {
+        return isDeleted[_recordId];
     }
 }
