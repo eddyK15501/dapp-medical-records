@@ -9,7 +9,8 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "compile": "npx hardhat compile",
-    "node": "npx hardhat node"
+    "node": "npx hardhat node",
+    "test": "npx hardhat test"
   },
   "dependencies": {
     "react": "^18.2.0",
