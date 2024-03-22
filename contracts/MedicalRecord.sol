@@ -31,7 +31,6 @@ contract MedicalRecord {
         string treatment
     );
 
-    // Events
     event DeleteRecordEvent(
         uint256 recordId,
         uint256 timestamp,
@@ -98,7 +97,6 @@ contract MedicalRecord {
         );
     }
 
-    // Getter Functions
     function getRecord() public view returns (uint256) {
         return recordId;
     }
