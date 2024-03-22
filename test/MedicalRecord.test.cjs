@@ -5,7 +5,7 @@ const { ethers } = require('hardhat');
 
 describe('MedicalRecord', () => {
   // Variables
-  let contract, userOne, transactionResponse, transactionReceipt;
+  let contract, userOne, transactionResponse, transactionReceipt, event;
 
   beforeEach(async () => {
     // Get User
@@ -32,7 +32,7 @@ describe('MedicalRecord', () => {
         .connect(userOne)
         .addRecord(
           'Ricky Bobby',
-          '40',
+          40,
           'Male',
           'AB Positive',
           'Cat',
@@ -43,12 +43,26 @@ describe('MedicalRecord', () => {
       transactionReceipt = await transactionResponse.wait();
     });
 
-    it('Emits an event after adding a record', async () => {
-      console.log(transactionReceipt);
-      const { event } = await transactionReceipt.events[0];
-      
-      console.log(event);
-      expect(event).to.eq('AddRecordEvent');
+    describe('Event', () => {
+      beforeEach(async () => {
+        event = await transactionReceipt.events[0];
+      });
+
+      it('Emits an event after adding a record', async () => {
+        expect(event.event).to.equal('AddRecordEvent');
+      });
+
+      it('Check arguments emitted from event', async () => {
+        const args = event.args;
+
+        expect(args.timestamp).to.not.equal(0);
+        expect(args.name).to.equal('Ricky Bobby');
+        expect(args.age).to.equal(40);
+        expect(args.bloodType).to.equal('AB Positive');
+        expect(args.allergies).to.equal('Cat');
+        expect(args.diagnosis).to.equal('Dengue');
+        expect(args.treatment).to.equal('Acetaminophen');
+      });
     });
   });
 });
