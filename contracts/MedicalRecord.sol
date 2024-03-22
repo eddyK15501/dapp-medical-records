@@ -80,7 +80,10 @@ contract MedicalRecord {
     }
 
     function deleteRecord(uint256 _recordId) public {
-        require(!isDeleted[_recordId], "Patient record has already been deleted.");
+        require(
+            !isDeleted[_recordId],
+            "Patient record has already been deleted."
+        );
         Record memory record = records[_recordId];
         isDeleted[_recordId] = true;
 
@@ -97,7 +100,12 @@ contract MedicalRecord {
         );
     }
 
-    function getRecord() public view returns (uint256) {
+    function getRecord(uint256 _recordId) public view returns (Record memory) {
+        Record memory record = records[_recordId];
+        return record;
+    }
+
+    function getRecordId() public view returns (uint256) {
         return recordId;
     }
 
@@ -117,19 +125,27 @@ contract MedicalRecord {
         return records[_recordId].gender;
     }
 
-    function getBloodType(uint256 _recordId) public view returns (string memory) {
+    function getBloodType(
+        uint256 _recordId
+    ) public view returns (string memory) {
         return records[_recordId].bloodType;
     }
 
-    function getAllergies(uint256 _recordId) public view returns (string memory) {
+    function getAllergies(
+        uint256 _recordId
+    ) public view returns (string memory) {
         return records[_recordId].allergies;
     }
 
-    function getDiagnosis(uint256 _recordId) public view returns (string memory) {
+    function getDiagnosis(
+        uint256 _recordId
+    ) public view returns (string memory) {
         return records[_recordId].diagnosis;
-    } 
+    }
 
-    function getTreatment(uint256 _recordId) public view returns (string memory) {
+    function getTreatment(
+        uint256 _recordId
+    ) public view returns (string memory) {
         return records[_recordId].treatment;
     }
 
