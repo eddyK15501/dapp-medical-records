@@ -42,5 +42,13 @@ describe('MedicalRecord', () => {
 
       transactionReceipt = await transactionResponse.wait();
     });
+
+    it('Emits an event after adding a record', async () => {
+      console.log(transactionReceipt);
+      const { event } = await transactionReceipt.events[0];
+      
+      console.log(event);
+      expect(event).to.eq('AddRecordEvent');
+    });
   });
 });
