@@ -4,6 +4,7 @@ const { expect } = require('chai');
 const { ethers } = require('hardhat');
 
 describe('MedicalRecord', () => {
+  // Variables
   let contract, userOne, transactionResponse, transactionReceipt;
 
   beforeEach(async () => {
@@ -20,8 +21,26 @@ describe('MedicalRecord', () => {
 
   describe('Deployment', () => {
     it('Successfully deploys the contract', async () => {
-      console.log(contract.address);
+      console.log('Deployed contract address: ', contract.address);
       expect(contract.address).to.not.equal(false);
+    });
+  });
+
+  describe('Add record', () => {
+    beforeEach(async () => {
+      transactionResponse = await contract
+        .connect(userOne)
+        .addRecord(
+          'Ricky Bobby',
+          '40',
+          'Male',
+          'AB Positive',
+          'Cat',
+          'Dengue',
+          'Acetaminophen'
+        );
+
+      transactionReceipt = await transactionResponse.wait();
     });
   });
 });
