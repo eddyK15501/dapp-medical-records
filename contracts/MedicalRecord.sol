@@ -2,23 +2,6 @@
 pragma solidity ^0.8.19;
 
 contract MedicalRecord {
-    struct Record {
-        uint256 recordId;
-        uint256 timestamp;
-        string name;
-        uint8 age;
-        string gender;
-        string bloodType;
-        string allergies;
-        string diagnosis;
-        string treatment;
-    }
-
-    uint256 internal recordId;
-
-    mapping(uint256 => Record) internal records;
-    mapping(uint256 => bool) public isDeleted;
-
     event AddRecordEvent(
         uint256 recordId,
         uint256 timestamp,
@@ -42,6 +25,30 @@ contract MedicalRecord {
         string diagnosis,
         string treatment
     );
+
+    error InvalidRecord();
+
+    struct Record {
+        uint256 recordId;
+        uint256 timestamp;
+        string name;
+        uint8 age;
+        string gender;
+        string bloodType;
+        string allergies;
+        string diagnosis;
+        string treatment;
+    }
+
+    address public owner;
+    uint256 internal recordId;
+
+    mapping(uint256 => Record) internal records;
+    mapping(uint256 => bool) public isDeleted;
+
+    constructor() {
+        owner = msg.sender;
+    }
 
     function addRecord(
         string memory _name,
@@ -80,10 +87,8 @@ contract MedicalRecord {
     }
 
     function deleteRecord(uint256 _recordId) public {
-        require(
-            !isDeleted[_recordId],
-            "Patient record has already been deleted."
-        );
+        if (!isDeleted[_recordId]) revert InvalidRecord();
+
         Record memory record = records[_recordId];
         isDeleted[_recordId] = true;
 
