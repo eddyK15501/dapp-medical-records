@@ -26,6 +26,7 @@ contract MedicalRecord {
         string treatment
     );
 
+    error Unauthorized();
     error InvalidRecord();
 
     struct Record {
@@ -45,6 +46,12 @@ contract MedicalRecord {
 
     mapping(uint256 => Record) internal records;
     mapping(uint256 => bool) public isDeleted;
+
+    modifier onlyOwner() {
+        if (msg.sender != owner) revert Unauthorized();
+
+        _;
+    }
 
     constructor() {
         owner = msg.sender;
@@ -86,7 +93,7 @@ contract MedicalRecord {
         );
     }
 
-    function deleteRecord(uint256 _recordId) public {
+    function deleteRecord(uint256 _recordId) public onlyOwner {
         if (!isDeleted[_recordId]) revert InvalidRecord();
 
         Record memory record = records[_recordId];
