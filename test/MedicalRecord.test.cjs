@@ -28,6 +28,7 @@ describe('MedicalRecord', () => {
 
   describe('Add record', () => {
     beforeEach(async () => {
+      // Add a record
       transactionResponse = await contract
         .connect(userOne)
         .addRecord(
@@ -39,11 +40,10 @@ describe('MedicalRecord', () => {
           'Dengue',
           'Acetaminophen'
         );
-
       transactionReceipt = await transactionResponse.wait();
     });
 
-    describe('Event', () => {
+    describe('Add record event', () => {
       beforeEach(async () => {
         event = await transactionReceipt.events[0];
       });
@@ -77,6 +77,33 @@ describe('MedicalRecord', () => {
         expect (record.diagnosis).to.equal('Dengue');
         expect (record.treatment).to.equal('Acetaminophen');
       });
+    });
+  });
+
+  describe('Delete record', () => {
+    beforeEach(async () => {
+      // Add a record
+      transactionResponse = await contract
+        .connect(userOne)
+        .addRecord(
+          'Ricky Bobby',
+          40,
+          'Male',
+          'AB Positive',
+          'Cat',
+          'Dengue',
+          'Acetaminophen'
+        );
+      transactionReceipt = await transactionResponse.wait();
+      
+      // Delete the record
+      transactionResponse = await contract.connect(userOne).deleteRecord(1);
+      transactionReceipt = await transactionResponse.wait();
+    });
+
+    it('isDeleted mapping is set to true', async () => {
+      const isDeleted = await contract.getIsDeleted(1);
+      expect(isDeleted).to.equal(true);
     });
   });
 });
