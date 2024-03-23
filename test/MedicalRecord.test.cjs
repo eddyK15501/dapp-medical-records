@@ -63,6 +63,20 @@ describe('MedicalRecord', () => {
         expect(args.diagnosis).to.equal('Dengue');
         expect(args.treatment).to.equal('Acetaminophen');
       });
+
+      it('Checks if getRecord() is working properly', async () => {
+        const record = await contract.getRecord(1);
+        console.log(record);
+
+        expect(record.recordId).to.equal(1);
+        expect(record.timestamp).to.not.equal(0);
+        expect(record.name).to.equal('Ricky Bobby');
+        expect(record.age).to.equal(40);
+        expect(record.bloodType).to.equal('AB Positive');
+        expect (record.allergies).to.equal('Cat');
+        expect (record.diagnosis).to.equal('Dengue');
+        expect (record.treatment).to.equal('Acetaminophen');
+      });
     });
   });
 });
