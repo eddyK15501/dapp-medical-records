@@ -66,7 +66,6 @@ describe('MedicalRecord', () => {
 
       it('Checks if getRecord() is working properly', async () => {
         const record = await contract.getRecord(1);
-        console.log(record);
 
         expect(record.recordId).to.equal(1);
         expect(record.timestamp).to.not.equal(0);
@@ -114,7 +113,15 @@ describe('MedicalRecord', () => {
 
     it('Checks arguments emitted from DeleteRecordEvent', async () => {
       const args = event.args;
-      console.log(args);
+      
+      expect(args.timestamp).to.not.equal(0);
+      expect(args.name).to.equal('Ricky Bobby');
+      expect(args.age).to.equal(40);
+      expect(args.gender).to.equal('Male');
+      expect(args.bloodType).to.equal('AB Positive');
+      expect(args.allergies).to.equal('Cat');
+      expect(args.diagnosis).to.equal('Dengue');
+      expect(args.treatment).to.equal('Acetaminophen');
     });
   });
 });
