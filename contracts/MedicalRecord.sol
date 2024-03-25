@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
+import "hardhat/console.sol";
+
 contract MedicalRecord {
     event AddRecordEvent(
         uint256 recordId,
@@ -94,7 +96,7 @@ contract MedicalRecord {
     }
 
     function deleteRecord(uint256 _recordId) public onlyOwner {
-        if (!isDeleted[_recordId]) revert InvalidRecord();
+        if (isDeleted[_recordId]) revert InvalidRecord();
 
         Record memory record = records[_recordId];
         isDeleted[_recordId] = true;

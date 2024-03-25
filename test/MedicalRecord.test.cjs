@@ -105,5 +105,10 @@ describe('MedicalRecord', () => {
       const isDeleted = await contract.getIsDeleted(1);
       expect(isDeleted).to.equal(true);
     });
+
+    it('Emits an event after deleting record', async () => {
+      const event = await transactionReceipt.events[0];
+      console.log(event); 
+    });
   });
 });
