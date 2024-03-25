@@ -107,8 +107,8 @@ describe('MedicalRecord', () => {
     });
 
     it('Emits an event after deleting record', async () => {
-      const event = await transactionReceipt.events[0];
-      console.log(event); 
+      const { event } = await transactionReceipt.events[0];
+      expect(event).to.equal('DeleteRecordEvent');
     });
   });
 });
