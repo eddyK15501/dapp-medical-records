@@ -52,7 +52,7 @@ describe('MedicalRecord', () => {
         expect(event.event).to.equal('AddRecordEvent');
       });
 
-      it('Check arguments emitted from event', async () => {
+      it('Check arguments emitted from AddRecordEvent', async () => {
         const args = event.args;
 
         expect(args.timestamp).to.not.equal(0);
@@ -99,6 +99,8 @@ describe('MedicalRecord', () => {
       // Delete the record
       transactionResponse = await contract.connect(userOne).deleteRecord(1);
       transactionReceipt = await transactionResponse.wait();
+
+      event = await transactionReceipt.events[0];
     });
 
     it('isDeleted mapping is set to true', async () => {
@@ -107,8 +109,12 @@ describe('MedicalRecord', () => {
     });
 
     it('Emits an event after deleting record', async () => {
-      const { event } = await transactionReceipt.events[0];
-      expect(event).to.equal('DeleteRecordEvent');
+      expect(event.event).to.equal('DeleteRecordEvent');
+    });
+
+    it('Checks arguments emitted from DeleteRecordEvent', async () => {
+      const args = event.args;
+      console.log(args);
     });
   });
 });
