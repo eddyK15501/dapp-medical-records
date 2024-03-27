@@ -11,6 +11,7 @@
     "preview": "vite preview",
     "compile": "npx hardhat compile",
     "node": "npx hardhat node",
+    "seed": "npx hardhat run scripts/seeding.js --network localhost",
     "test": "npx hardhat test"
   },
   "dependencies": {
