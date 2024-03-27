@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "deploy": "npx hardhat deploy --scripts 00-deploy.js",
+    "deploy": "npx hardhat run scripts/deploy.js --network localhost",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "compile": "npx hardhat compile",
