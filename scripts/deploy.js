@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
-import { ethers } from 'hardhat';
+import pkg from 'hardhat';
+const { ethers } = pkg;
 
 async function main() {
   // Signers
