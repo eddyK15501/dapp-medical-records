@@ -2,18 +2,22 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   connection: null,
+  chainId: null,
 };
 
 export const providerSlice = createSlice({
   name: 'provider',
   initialState,
   reducers: {
-    connect: (state, action) => {
+    setConnection: (state, action) => {
       state.connection = action.payload;
+    },
+    setChainId: (state, action) => {
+      state.chainId = action.payload;
     },
   },
 });
 
-export const { connect } = providerSlice.actions;
+export const { setConnection, setChainId } = providerSlice.actions;
 
 export default providerSlice.reducer;
