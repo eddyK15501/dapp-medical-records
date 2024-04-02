@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  connection: {},
+  connection: null,
 };
 
 export const providerSlice = createSlice({
@@ -9,7 +9,7 @@ export const providerSlice = createSlice({
   initialState,
   reducers: {
     connect: (state, action) => {
-      return { ...state.connection, connection: action.payload }
+      state.connection = action.payload;
     },
   },
 });
